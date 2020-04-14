@@ -16,10 +16,10 @@ class User extends Authenticatable
     use Notifiable;
 
     // PERMISSIONS
-    const REGISTERED = 0;
-    const MODERATOR = 1;
+    const REGISTERED = 4;
+    const MODERATOR = 3;
     const MANAGER = 2;
-    const ADMIN = 3;
+    const ADMIN = 1;
     
     /**
      * The attributes that are mass assignable.
