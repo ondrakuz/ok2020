@@ -20,6 +20,7 @@ class UserController extends Controller
             $user = Auth::user();
             $user->role = $user->role();
             $users = $this->userModel->getAll();
+            //print_r($users); exit;
             return view('user.index', ['users' => $users, 'user' => $user]);
         } else {
             return redirect()->route('auth.login');

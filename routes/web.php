@@ -33,4 +33,7 @@ Route::get('article/published/{url}', 'ArticleController@published')->name('arti
 Route::get('article/delete/{url}', 'ArticleController@destroy')->name('article.delete');
 Route::resource('article', 'ArticleController');
 
+// User routes
+Route::resource('user', 'UserController')->name('get','user.index');
+
 Auth::routes(['verify' => true]);

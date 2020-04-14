@@ -15,6 +15,12 @@ class User extends Authenticatable
 {
     use Notifiable;
 
+    // PERMISSIONS
+    const REGISTERED = 0;
+    const MODERATOR = 1;
+    const MANAGER = 2;
+    const ADMIN = 3;
+    
     /**
      * The attributes that are mass assignable.
      *
@@ -136,7 +142,7 @@ class User extends Authenticatable
      * @return [object]
      */
     public function getAll($columns = ['*']) {
-        $dataObject =  static::query()->get(
+        return  static::query()->get(
             is_array($columns) ? $columns : func_get_args()
             );
     }
