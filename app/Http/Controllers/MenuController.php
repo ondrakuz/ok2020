@@ -53,13 +53,14 @@ class MenuController extends Controller
             $this->user->role = $this->user->role();
             return view('menu.index', ['menus' => $this->menus, 'user' => $this->user]);
         } else {
-            return view('auth.login', ['menus' => $this->menus]);
+            return redirect()->back()->withErrors(['You don\'t have permission to access administrator.']);
         }
     }
     
     /**
      * Change priority of menu up.
      *
+     * @param  string  $url
      * @return \Illuminate\Http\Response
      */
     public function priorityUp($url)
@@ -78,6 +79,7 @@ class MenuController extends Controller
     /**
      * Change priority of menu up.
      *
+     * @param  string  $url
      * @return \Illuminate\Http\Response
      */
     public function priorityDown($url)
@@ -96,6 +98,7 @@ class MenuController extends Controller
     /**
      * Change display param of menu
      *
+     * @param  string  $url
      * @return \Illuminate\Http\Response
      */
     public function display($url)
@@ -119,6 +122,7 @@ class MenuController extends Controller
     /**
      * Change priority of menu up.
      *
+     * @param  string  $url
      * @return \Illuminate\Http\Response
      */
     public function titlePage($url)
@@ -137,21 +141,6 @@ class MenuController extends Controller
             return redirect()->route('menu.index');
         } else {
             return redirect()->back()->withErrors(['Value did not changed.']);
-        }
-    }
-    
-    /**
-     * Change priority of menu up.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function delete($url)
-    {
-        $menu = $this->menuModel->getByUrl($url);
-        if ($menu->destroy([$menu->id])) {
-            return redirect()->route('menu.index');
-        } else {
-            return redirect()->back()->withErrors(['Record has not been deleted.']);
         }
     }
     
@@ -180,7 +169,7 @@ class MenuController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  App\Http\Requests\Menu\StoreRequest  $request
      * @return \Illuminate\Http\Response
      */
     public function store(StoreRequest $request)
@@ -269,8 +258,7 @@ class MenuController extends Controller
                     $this->user->role = $this->user->role();
                     return view('admin.welcome', ['user' => $this->user]);
                 } else {
-                    //return redirect()->route('auth.login');
-                    return view('auth.login', ['user' => $this->user, 'menus' => $this->menuModel->getByDisplayed()]);
+                    return redirect()->back()->withErrors(['You don\'t have permission to access administrator.']);;
                 }
         }
         
@@ -279,7 +267,7 @@ class MenuController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Menu  $menu
+     * @param  string  $url
      * @return \Illuminate\Http\Response
      */
     public function edit(string $url)
@@ -303,7 +291,7 @@ class MenuController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  App\Http\Requests\Menu\UpdateRequest  $request
      * @param  \App\Menu  $menu
      * @return \Illuminate\Http\Response
      */
@@ -327,11 +315,16 @@ class MenuController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Menu  $menu
+     * @param  string  $url
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Menu $menu)
+    public function destroy($url)
     {
-        //
+        $menu = $this->menuModel->getByUrl($url);
+        if ($menu->destroy([$menu->id])) {
+            return redirect()->route('menu.index');
+        } else {
+            return redirect()->back()->withErrors(['Record has not been deleted.']);
+        }
     }
 }

@@ -16,10 +16,10 @@ class User extends Authenticatable
     use Notifiable;
 
     // PERMISSIONS
-    const REGISTERED = 4;
-    const MODERATOR = 3;
-    const MANAGER = 2;
-    const ADMIN = 1;
+    const REGISTERED = 4; // permission to write posts in article disscusion and to forum
+    const MODERATOR = 3;  // permission to moderate article disscusion and forums 
+    const MANAGER = 2;    // permission to access administration and do anything except superadmin stuff
+    const ADMIN = 1;      // permission to superadmin stuff (add users, site settings etc.)
     
     /**
      * The attributes that are mass assignable.
@@ -109,7 +109,7 @@ class User extends Authenticatable
             is_array($columns) ? $columns : func_get_args()
             )->where('id', '=', $id);
             
-        for ($i = 0; $i < 250; $i++) {
+        for ($i = 0; $i < 65535; $i++) {
             if (!empty($dataObject[$i])) {
                 return $dataObject[$i];
             }
@@ -128,7 +128,7 @@ class User extends Authenticatable
             is_array($columns) ? $columns : func_get_args()
             )->where('nick', '=', $nick);
             
-        for ($i = 0; $i < 250; $i++) {
+        for ($i = 0; $i < 65535; $i++) {
             if (!empty($dataObject[$i])) {
                 return $dataObject[$i];
             }

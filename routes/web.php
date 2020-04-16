@@ -23,7 +23,7 @@ Route::get('menu/priority-up/{url}', 'MenuController@priorityUp')->name('menu.pr
 Route::get('menu/priority-down/{url}', 'MenuController@priorityDown')->name('menu.priority-down');
 Route::get('menu/display/{url}', 'MenuController@display')->name('menu.display');
 Route::get('menu/title-page/{url}', 'MenuController@titlePage')->name('menu.title-page');
-Route::get('menu/delete/{url}', 'MenuController@delete')->name('menu.delete');
+Route::get('menu/delete/{url}', 'MenuController@destroy')->name('menu.delete');
 Route::resource('menu', 'MenuController');
 
 // Article routes
@@ -34,6 +34,8 @@ Route::get('article/delete/{url}', 'ArticleController@destroy')->name('article.d
 Route::resource('article', 'ArticleController');
 
 // User routes
+Route::get('user/permissions-up/{nick}', 'UserController@permissionsUp')->name('user.permissions-up');
+Route::get('user/permissions-down/{nick}', 'UserController@permissionsDown')->name('user.permissions-down');
 Route::resource('user', 'UserController')->name('get','user.index');
 
 Auth::routes(['verify' => true]);
