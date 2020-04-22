@@ -169,7 +169,7 @@ class MenuController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  App\Http\Requests\Menu\StoreRequest  $request
+     * @param  \App\Http\Requests\Menu\StoreRequest  $request
      * @return \Illuminate\Http\Response
      */
     public function store(StoreRequest $request)
@@ -211,7 +211,7 @@ class MenuController extends Controller
         
         switch($menu->type_of_page_id) {
             case TypeOfPage::PAGE:
-                $article = $articleModel->where('menu_id', $menu->id)->get()[0];
+                $article = $articleModel->getOneByMenuId($menu->id);
                 return view('article.single', ['article' => $article, 'menus' => $this->menuModel->getByDisplayed()]);
                 break;
             case TypeOfPage::BLOG:
@@ -291,7 +291,7 @@ class MenuController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  App\Http\Requests\Menu\UpdateRequest  $request
+     * @param  \App\Http\Requests\Menu\UpdateRequest  $request
      * @param  \App\Menu  $menu
      * @return \Illuminate\Http\Response
      */

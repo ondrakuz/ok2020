@@ -78,7 +78,23 @@ class UserController extends Controller
                 return redirect()->route('user.index');
             }
         } else {
-            return redirect()->back()->withErrors(['You don\'t have permission to do this action.']);
+            return redirect()->back()->withErrors(['You don\'t have permission to this action.']);
+        }
+    }
+    
+    /**
+     * Show the form for creating a new user.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function create()
+    {
+        if (Auth::guard()->check() && Auth::user()->role_id < Role::MANAGER) {
+            $this->user = Auth::user();
+            $this->user->role = $this->user->role();
+            return view('user.create', ['user' => $this->user]);
+        } else {
+            return redirect()->back()->withErrors(['You don\'t have permission to this action.']);
         }
     }
 }

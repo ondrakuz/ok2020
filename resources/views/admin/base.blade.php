@@ -22,15 +22,15 @@
                         	<a href="{{ env('APP_URL') }}"><h3>{{ env('APP_NAME') . __(' Site') }}</h3></a>
                     	</div>
                     </td>
-                        <td class="user">
-                        	{{ __('User') }}: <img src="{{ env('APP_URL') }}/assets/icons/@php if ($user->role->slug === 'admin') {echo "admin";} else {echo "user";} @endphp.png"/> <span@php if ($user->role->slug === 'admin') {echo " class='red' ";} elseif ($user->role->slug === 'manager') {echo " class='green' ";}@endphp>{{ $user->nick }}</span><br />
-                	        <form method="POST" action="{{ route('logout') }}">
-                                @csrf
-                                <button type="submit" class="btn btn-primary btn-sm" style="display: inline-block; background-color: #acacac; border: none; padding: 0; margin: 0;">
-                                    {{ __('Logout') }}
-                                </button>
-                            </form>
-                        </td>
+                    <td class="user">
+                    	{{ __('User') }}: <img src="{{ env('APP_URL') }}/assets/icons/@php if ($user->role->slug === 'admin') {echo "admin";} else {echo "user";} @endphp.png"/> <span@php if ($user->role->slug === 'admin') {echo " class='red' ";} elseif ($user->role->slug === 'manager') {echo " class='green' ";}@endphp>{{ $user->nick }}</span><br />
+            	        <form method="POST" action="{{ route('logout') }}">
+                            @csrf
+                            <button type="submit" class="btn btn-primary btn-sm" style="display: inline-block; background-color: #acacac; border: none; padding: 0; margin: 0;">
+                                {{ __('Logout') }}
+                            </button>
+                        </form>
+                    </td>
                 </tr></table>
             </div><!-- /#header -->
             <div class="row">
@@ -55,7 +55,7 @@
                         	<ul class="list-group">
                                 <li class="list-group-item"><a href="{{ env('APP_URL') }}/user">{{ __('Overview of Users') }}</a></li>
                                 <li class="list-group-item"><a href="{{ env('APP_URL') }}/user/create">{{ __('Add User') }}</a></li>
-                                <li class="list-group-item"><a href="{{ env('APP_URL') }}/user/edit/{{ $user->nick }}">{{ __('Change User Data') }}</a></li>
+                                <li class="list-group-item"><a href="{{ env('APP_URL') }}/user/edit/{{ $user->nick }}">{{ __('Change Your Registration Data') }}</a></li>
                             </ul>
                         </div></li>
                         <li class="list-group-item"><div class="category">
