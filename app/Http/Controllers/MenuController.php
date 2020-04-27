@@ -13,6 +13,7 @@ use App\Http\Requests\Menu\StoreRequest;
 use App\Http\Requests\Menu\UpdateRequest;
 use Illuminate\Support\Facades\Auth;
 use App\Providers\RouteServiceProvider;
+use App\Helpers\RoleHelper;
 
 class MenuController extends Controller
 {
@@ -48,7 +49,7 @@ class MenuController extends Controller
      */
     public function index()
     {
-        if (Auth::guard()->check() && Auth::user()->role_id < Role::MODERATOR) {
+        if (Auth::guard()->check() && Auth::user()->role_id < RoleHelper::MODERATOR) {
             $this->user = Auth::user();
             $this->user->role = $this->user->role();
             return view('menu.index', ['menus' => $this->menus, 'user' => $this->user]);
@@ -151,7 +152,7 @@ class MenuController extends Controller
      */
     public function create()
     {
-        if (Auth::guard()->check() && Auth::user()->role_id < Role::MODERATOR) {
+        if (Auth::guard()->check() && Auth::user()->role_id < RoleHelper::MODERATOR) {
             $this->user = Auth::user();
             $this->user->role = $this->user->role();
             return view('menu.create', [
@@ -253,7 +254,7 @@ class MenuController extends Controller
                 return view('auth.login', ['menus' => $this->menuModel->getByDisplayed()]);
                 break;
             case TypeOfPage::ADMINISTRATOR:
-                if (Auth::guard()->check() && Auth::user()->role_id < Role::MODERATOR) {
+                if (Auth::guard()->check() && Auth::user()->role_id < RoleHelper::MODERATOR) {
                     $this->user = Auth::user();
                     $this->user->role = $this->user->role();
                     return view('admin.welcome', ['user' => $this->user]);
@@ -272,7 +273,7 @@ class MenuController extends Controller
      */
     public function edit(string $url)
     {
-        if (Auth::guard()->check() && Auth::user()->role_id < Role::MODERATOR) {
+        if (Auth::guard()->check() && Auth::user()->role_id < RoleHelper::MODERATOR) {
             $this->user = Auth::user();
             $this->user->role = $this->user->role();
             $menu = $this->menuModel->getByUrl($url);

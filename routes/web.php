@@ -36,6 +36,8 @@ Route::resource('article', 'ArticleController');
 // User routes
 Route::get('user/permissions-up/{nick}', 'UserController@permissionsUp')->name('user.permissions-up');
 Route::get('user/permissions-down/{nick}', 'UserController@permissionsDown')->name('user.permissions-down');
+Route::get('user/edit/{nick}', 'UserController@edit')->name('user.edit');
+Route::get('user/update', 'UserController@update')->name('user.update');
 Route::resource('user', 'UserController');
 
 Auth::routes(['verify' => true]);

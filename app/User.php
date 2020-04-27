@@ -15,12 +15,6 @@ class User extends Authenticatable
 {
     use Notifiable;
 
-    // PERMISSIONS
-    const REGISTERED = 4; // permission to write posts in article disscusion and to forum
-    const MODERATOR = 3;  // permission to moderate article disscusion and forums 
-    const MANAGER = 2;    // permission to access administration and do anything except superadmin stuff
-    const ADMIN = 1;      // permission to superadmin stuff (add users, site settings etc.)
-    
     /**
      * The attributes that are mass assignable.
      *
@@ -54,7 +48,11 @@ class User extends Authenticatable
         parent::__construct($attributes);
         
         self::created(function (User $user) {
-            $user->assignRole(['registered']);
+            if (empty($user->role_id) || ($user->role_id > 4 || $user->role_id < 1)) {
+                $user->assignRole('registered');
+            } else {
+                self::sendEmailVerificationNotification();
+            }
         });
     }
     
@@ -77,8 +75,8 @@ class User extends Authenticatable
      */
     public function assignRole($slug)
     {
-        $newRole = Role::whereIn('slug', $slug)->id;
-        $this->role_id = $newRole;
+        $newRole = Role::getBySlug($slug);
+        $this->role_id = $newRole->id;
     }
 
     /**

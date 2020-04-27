@@ -5,6 +5,7 @@ namespace App\Http\Requests\Menu;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\Auth;
 use App\Role;
+use App\Helpers\RoleHelper;
 
 class StoreRequest extends FormRequest
 {
@@ -15,7 +16,7 @@ class StoreRequest extends FormRequest
      */
     public function authorize()
     {
-        return (Auth::guard()->check() && Auth::user()->role_id < Role::MODERATOR);
+        return (Auth::guard()->check() && Auth::user()->role_id < RoleHelper::MODERATOR);
     }
 
     /**

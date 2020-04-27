@@ -43,8 +43,7 @@
             "database/factories"
         ],
         "files": [
-            "app/Helpers/UserHelper.php"
-        ]
+         ]
     },
     "autoload-dev": {
         "psr-4": {

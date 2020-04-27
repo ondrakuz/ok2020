@@ -1,26 +1,31 @@
 <?php
+namespace App\Helpers;
+
 use App\User;
 use Illuminate\Support\Facades\Auth;
+use App\Helpers\RoleHelper;
 
 class UserHelper
 {
     public static function formatPermCell(array $user)
   {
+      //print_r($user); exit;
+      $html = '';
       switch ($user['role_id'])
       {
-          case User::REGISTERED:
-              $html = "<span class=\"gray\">Registered </span>\n";
+          case RoleHelper::REGISTERED:
+              $html .= "<span class=\"gray\">Registered </span>\n";
               break;
-          case User::MODERATOR:
-              $html = "<span class=\"blue\">Moderator </span>\n";
+          case RoleHelper::MODERATOR:
+              $html .= "<span class=\"blue\">Moderator </span>\n";
               break;
-          case User::MANAGER:
-              $html = "<span class=\"green\">Manager </span>\n";
+          case RoleHelper::MANAGER:
+              $html .= "<span class=\"green\">Manager </span>\n";
               break;
-          case User::ADMIN:
-              $html = "<span class=\"red\">Admin </span>\n";
+          case RoleHelper::ADMIN:
+              $html .= "<span class=\"red\">Admin </span>\n";
       }
-      if ($user['role_id'] > User::ADMIN && $user['id'] > 1)
+      if ($user['role_id'] > RoleHelper::ADMIN && $user['id'] > 1)
       {
           $html .= "<a href=\"".env('APP_URL')."/user/permissions-up/$user[nick]\">
                         <img src=\"".env('APP_URL')."/assets/icons/arrow_up.png\" width=\"10\" height=\"10\" />
@@ -30,7 +35,7 @@ class UserHelper
       {
           $html .= "<img src=\"".env('APP_URL')."/assets/icons/arrow_up.png\" width=\"10\" height=\"10\" />\n";
       }
-      if ($user['role_id'] < User::REGISTERED && $user['id'] > 1 && $user['id'] != Auth::user()->id)
+      if ($user['role_id'] < RoleHelper::REGISTERED && $user['id'] > 1 && $user['id'] != Auth::user()->id)
       {
           $html .= "<a href=\"".env('APP_URL')."/user/permissions-down/$user[nick]\">
                         <img src=\"".env('APP_URL')."/assets/icons/arrow_down.png\" width=\"10\" height=\"10\" />
@@ -46,7 +51,7 @@ class UserHelper
   
     public static function formatEditCell($nick)
     {
-        if (Auth::user()->role_id === User::ADMIN)
+        if (Auth::user()->role_id === RoleHelper::ADMIN)
         {
             $html = "<a href=\"".env('APP_URL')."/user/edit/$nick\">
                         <img src=\"".env('APP_URL')."/assets//icons/pencil.png\" width=\"16\" height=\"16\" />
@@ -74,4 +79,3 @@ class UserHelper
         return $html;
     }
 }
-?>

@@ -5,6 +5,7 @@
 
 @section('content')
           <h4>{{ __('Users Overview') }}</h4>
+          @php //print_r($users->toArray()); exit; @endphp
           <div class="table-responsive">
             <table class="table table-hover">
               <caption class="text-center">{{ __('Users') }}</caption>

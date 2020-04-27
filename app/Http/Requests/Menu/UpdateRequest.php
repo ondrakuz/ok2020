@@ -4,8 +4,8 @@ namespace App\Http\Requests\Menu;
 
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\Auth;
-use App\Role;
 use Illuminate\Validation\Rule;
+use App\Helpers\RoleHelper;
 
 class UpdateRequest extends FormRequest
 {
@@ -16,7 +16,7 @@ class UpdateRequest extends FormRequest
      */
     public function authorize()
     {
-        return (Auth::guard()->check() && Auth::user()->role_id < Role::MODERATOR);
+        return (Auth::guard()->check() && Auth::user()->role_id < RoleHelper::MODERATOR);
     }
 
     /**

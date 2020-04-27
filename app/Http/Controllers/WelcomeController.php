@@ -71,7 +71,7 @@ class WelcomeController extends Controller
                 return view('auth.login', ['menus' => $this->menuModel->getByDisplayed()]);
                 break;
             case TypeOfPage::ADMINISTRATOR:
-                if (Auth::guard()->check() && Auth::user()->role_id < Role::MODERATOR) {
+                if (Auth::guard()->check() && Auth::user()->role_id < RoleHelper::MODERATOR) {
                     $this->user = Auth::user();
                     $this->user->role = $this->user->role();
                     return view('admin.welcome', ['user' => $this->user]);

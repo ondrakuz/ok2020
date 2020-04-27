@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Article;
 use App\Menu;
 use App\Role;
+use App\Helpers\RoleHelper;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use App\Http\Requests\Article\StoreRequest;
@@ -31,7 +32,7 @@ class ArticleController extends Controller
      */
     public function index()
     {
-        if (Auth::guard()->check() && Auth::user()->role_id < Role::MODERATOR) {
+        if (Auth::guard()->check() && Auth::user()->role_id < RoleHelper::MODERATOR) {
             $this->user = Auth::user();
             $this->user->role = $this->user->role();
             $articles = $this->articleModel->getAll();
@@ -59,7 +60,7 @@ class ArticleController extends Controller
      */
     public function create()
     {
-        if (Auth::guard()->check() && Auth::user()->role_id < Role::MODERATOR) {
+        if (Auth::guard()->check() && Auth::user()->role_id < RoleHelper::MODERATOR) {
             $this->user = Auth::user();
             $this->user->role = $this->user->role();
             return view('article.create', [
@@ -121,7 +122,7 @@ class ArticleController extends Controller
      */
     public function edit(string $url)
     {
-        if (Auth::guard()->check() && Auth::user()->role_id < Role::MODERATOR) {
+        if (Auth::guard()->check() && Auth::user()->role_id < RoleHelper::MODERATOR) {
             $this->user = Auth::user();
             $this->user->role = $this->user->role();
             return view('article.edit', [
@@ -162,7 +163,7 @@ class ArticleController extends Controller
      */
     public function published($url)
     {
-        if (Auth::guard()->check() && Auth::user()->role_id < Role::MODERATOR) {
+        if (Auth::guard()->check() && Auth::user()->role_id < RoleHelper::MODERATOR) {
             $article = $this->articleModel->getByUrl($url);
             $data['published'] = $article->published;
             if ($data['published']) {
