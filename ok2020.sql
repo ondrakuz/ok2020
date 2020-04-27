@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Počítač: localhost:3306
--- Vytvořeno: Úte 14. dub 2020, 11:43
+-- Vytvořeno: Pon 27. dub 2020, 14:54
 -- Verze serveru: 5.7.29-0ubuntu0.18.04.1
--- Verze PHP: 7.2.24-0ubuntu0.18.04.3
+-- Verze PHP: 7.2.24-0ubuntu0.18.04.4
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
@@ -207,7 +207,7 @@ CREATE TABLE `users` (
   `nick` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL,
   `email` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `password` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `role_id` smallint(6) NOT NULL,
+  `role_id` smallint(6) NOT NULL DEFAULT '4',
   `email_verified_at` timestamp NULL DEFAULT NULL,
   `remember_token` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
@@ -219,8 +219,11 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `nick`, `email`, `password`, `role_id`, `email_verified_at`, `remember_token`, `created_at`, `updated_at`) VALUES
-(1, 'admin', 'ondrej.kuzel@seznam.cz', '$2y$10$B3pT.iKemI.qL7ukLj15Uu50ZzHAr53MjWYx1Ee9fyx75f/beBbf6', 1, '2020-04-10 11:03:09', 'q9TBzJIQKgPDl9OxzK4OUrSM7iQphm6BbWQXjhbxqhwsQ2up89ye70ZIW85g', '2020-04-10 11:03:09', '2020-04-10 11:03:09'),
-(2, 'ondrak', 'ondrej.kuzel@gmail.com', '$2y$10$6eZybPTMdu6pnyX6JlhHNe3gbdAM.SnnAhr0vmUIVMm4IyunqHRcK', 1, '2020-04-10 11:03:09', 'fLxWCUK30fIp60QBA0ut65Os8aHDXpyGVU2esiTXSkdSDUlkx8fwcDteJFWE', '2020-04-10 11:03:09', '2020-04-10 11:03:09');
+(1, 'admin', 'ondrej.kuzel@seznam.cz', '$2y$10$B3pT.iKemI.qL7ukLj15Uu50ZzHAr53MjWYx1Ee9fyx75f/beBbf6', 1, '2020-04-10 11:03:09', '5T97nwv613QiqzS7LXp56MuDSBWU0fdbyTdK7OXHIbGcXSVulielBCTFYlgt', '2020-04-10 11:03:09', '2020-04-15 13:57:29'),
+(2, 'ondrak', 'ondrej.kuzel@gmail.com', '$2y$10$6eZybPTMdu6pnyX6JlhHNe3gbdAM.SnnAhr0vmUIVMm4IyunqHRcK', 1, '2020-04-10 11:03:09', 'amyShG72MnpOEFXqBJ7f9qPmdcDbH4r9xtQuWWIiQKonai6fUT8JgUyoKJk5', '2020-04-10 11:03:09', '2020-04-15 14:47:11'),
+(4, 'henryok', 'henryok.93@gmail.com', '$2y$10$06V3T3mLAPWghGV9c9nx3ePHLbj/OUWw3oVntnTGxv3GkhQmPOgHK', 2, NULL, 'MEUlYbCw3syyNbkjGQ4zx0GGcK5cMMXxVecG8td43UB2nNlHSdyq653LDEPq', '2020-04-24 15:35:55', '2020-04-24 15:35:55'),
+(5, 'rusuf', 'rusuf4476@gmail.com', '$2y$10$GXHTwQItKRC3IrAC/.esVegzy2qstC.gnn..WmKEow4mdBvu1UoTq', 3, NULL, NULL, '2020-04-25 10:43:59', '2020-04-25 11:59:15'),
+(20, 'okuzel', 'rusuf@seznam.cz', '$2y$10$/tSw0jXfjuowe2tZUyOoE..M5E6YS.c0mN24oVvg..qNmNL4A6iYK', 4, NULL, NULL, '2020-04-25 21:31:24', '2020-04-25 21:31:24');
 
 -- --------------------------------------------------------
 
@@ -345,7 +348,7 @@ ALTER TABLE `types_of_pages`
 -- AUTO_INCREMENT pro tabulku `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
 --
 -- AUTO_INCREMENT pro tabulku `web_structures`
 --
