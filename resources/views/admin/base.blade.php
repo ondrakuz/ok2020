@@ -8,7 +8,7 @@
         <title>@yield('title', env('APP_NAME').' - Administrator')</title>
         
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" />
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js" type="text/javascript"></script>
+        <script src="https://code.jquery.com/jquery-3.5.0.min.js" type="text/javascript"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" type="text/javascript"></script>
         <link rel="stylesheet" href="{{ env('APP_URL') }}/css/admin.css" type="text/css" />
 	</head>
