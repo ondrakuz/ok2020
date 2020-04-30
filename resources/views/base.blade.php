@@ -18,6 +18,15 @@
         <script src="{{ asset('js/app.js') }}"></script>
         <script src="{{ asset('js/freelancer.js') }}"></script>
         <script src="{{ asset('js/jqBootstrapValidation.js') }}"></script>
+        <script type="text/javascript" >
+	    //<![CDATA[
+
+            jQuery.htmlPrefilter = function( html ) {
+            	return html;
+            };
+            	    	
+    	//]]>
+    	</script>
 	</head>
     <body id="page-top">
         <!-- Navigation-->
