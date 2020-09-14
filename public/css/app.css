@@ -10994,6 +10994,7 @@ input[type=button].btn-block {
   background-clip: border-box;
   border: 1px solid rgba(0, 0, 0, 0.125);
   border-radius: 0.25rem;
+  margin: 2rem;
 }
 
 .card > hr {
@@ -11537,6 +11538,7 @@ a.badge-dark.focus {
   margin-bottom: 1rem;
   border: 1px solid transparent;
   border-radius: 0.25rem;
+  margin-top: 2rem; 
 }
 
 .alert-heading {
