@@ -43,7 +43,9 @@
             "database/factories"
         ],
         "files": [
-         ]
+            "app/Helpers/RoleHelper.php",
+            "app/Helpers/UserHelper.php"
+        ]
     },
     "autoload-dev": {
         "psr-4": {

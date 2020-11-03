@@ -54,16 +54,20 @@ class Menu extends Model
      * @return [object]
      */
     public function getByUrl(string $url, $columns = ['*']) {
-        $dataObject = static::query()->get(
-            is_array($columns) ? $columns : func_get_args()
-            )->where('url', '=', $url);
+//         $dataObject = static::query()->get(
+//             is_array($columns) ? $columns : func_get_args()
+//             )->where('url', '=', $url);
             
-            //print_r($dataObject); exit;
-            for ($i = 0; $i < 250; $i++) {
-                if (!empty($dataObject[$i])) {
-                    return $dataObject[$i];
-                }
-            }
+//             //print_r($dataObject); exit;
+//             for ($i = 0; $i < 250; $i++) {
+//                 if (!empty($dataObject[$i])) {
+//                     return $dataObject[$i];
+//                 }
+//             }
+
+        return static::query()->get(
+            is_array($columns) ? $columns : func_get_args()
+            )->where('url', '=', $url)->first();
     }
     
     /**
@@ -89,15 +93,19 @@ class Menu extends Model
      * @return [object]
      */
     public function getById(int $id, $columns = ['*']) {
-        $dataObject = static::query()->get(
-            is_array($columns) ? $columns : func_get_args()
-            )->where('id', '=', $id);
+//         $dataObject = static::query()->get(
+//             is_array($columns) ? $columns : func_get_args()
+//             )->where('id', '=', $id)->first();
 
-        for ($i = 0; $i < 250; $i++) {
-            if (!empty($dataObject[$i])) {
-                return $dataObject[$i];
-            }
-        }
+//         for ($i = 0; $i < 250; $i++) {
+//             if (!empty($dataObject[$i])) {
+//                 return $dataObject[$i];
+//             }
+//         }
+
+        return static::query()->get(
+            is_array($columns) ? $columns : func_get_args()
+            )->where('id', '=', $id)->first();
     }
     
     /**
@@ -106,15 +114,19 @@ class Menu extends Model
      * @return [Menu]
      */
     public function getTitlePage($columns = ['*']) {
-        $dataObject = static::query()->get(
-            is_array($columns) ? $columns : func_get_args()
-            )->where('title_page', '=', 1);
+//         $dataObject = static::query()->get(
+//             is_array($columns) ? $columns : func_get_args()
+//             )->where('title_page', '=', 1);
 
-        for ($i = 0; $i < 250; $i++) {
-            if (!empty($dataObject[$i])) {
-                return $dataObject[$i];
-            }
-        }
+//         for ($i = 0; $i < 250; $i++) {
+//             if (!empty($dataObject[$i])) {
+//                 return $dataObject[$i];
+//             }
+//         }
+
+        return static::query()->get(
+            is_array($columns) ? $columns : func_get_args()
+            )->where('title_page', '=', 1)->first();
     }
     
     /**

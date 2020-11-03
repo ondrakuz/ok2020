@@ -67,7 +67,20 @@ class User extends Authenticatable
         $role = new Role();
         return $role->getById($this->role_id);
     }
-
+    
+    /**
+     * Get the role of user.
+     *
+     * @return Role
+     */
+    public function hasRole(string $slug)
+    {
+        $role = new Role();
+        $userRole = $role->getById($this->role_id);
+        $askedRole = Role::getBySlug($slug);
+        return $userRole->slug == $askedRole->slug;
+    }
+    
     /**
      * Assign role to user.
      *
@@ -103,15 +116,18 @@ class User extends Authenticatable
      * @return [object]
      */
     public function getById(int $id, $columns = ['*']) {
-        $dataObject =  static::query()->get(
-            is_array($columns) ? $columns : func_get_args()
-            )->where('id', '=', $id);
+//         $dataObject = static::query()->get(
+//             is_array($columns) ? $columns : func_get_args()
+//             )->where('id', '=', $id)->first();
             
-        for ($i = 0; $i < 65535; $i++) {
-            if (!empty($dataObject[$i])) {
-                return $dataObject[$i];
-            }
-        }
+//         for ($i = 0; $i < 65535; $i++) {
+//             if (!empty($dataObject[$i])) {
+//                 return $dataObject[$i];
+//             }
+//         }
+        return static::query()->get(
+            is_array($columns) ? $columns : func_get_args()
+            )->where('id', '=', $id)->first();
     }
     
     /**

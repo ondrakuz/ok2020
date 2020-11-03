@@ -61,16 +61,19 @@ class Article extends Model
      */
     public function getByUrl(string $url, $columns = ['*'])
     {
-        $dataObject = static::query()->get(
-            is_array($columns) ? $columns : func_get_args()
-            )->where('url', '=', $url);
+//         $dataObject = static::query()->get(
+//             is_array($columns) ? $columns : func_get_args()
+//             )->where('url', '=', $url)->first();
             
-        //print_r($dataObject); exit;
-        for ($i = 0; $i < 250; $i++) {
-            if (!empty($dataObject[$i])) {
-                return $dataObject[$i];
-            }
-        }
+//         //print_r($dataObject); exit;
+//         for ($i = 0; $i < 250; $i++) {
+//             if (!empty($dataObject[$i])) {
+//                 return $dataObject[$i];
+//             }
+//         }
+        return static::query()->get(
+            is_array($columns) ? $columns : func_get_args()
+            )->where('url', '=', $url)->first();
     }
     
     /**
@@ -81,16 +84,19 @@ class Article extends Model
      */
     public function getOneByMenuId(int $menu_id, $columns = ['*'])
     {
-        $dataObject = static::query()->get(
-            is_array($columns) ? $columns : func_get_args()
-            )->where('menu_id', '=', $menu_id);
+//         $dataObject = static::query()->get(
+//             is_array($columns) ? $columns : func_get_args()
+//             )->where('menu_id', '=', $menu_id)->first();
             
-        //print_r($dataObject); exit;
-        for ($i = 0; $i < 250; $i++) {
-            if (!empty($dataObject[$i])) {
-                return $dataObject[$i];
-            }
-        }
+//         //print_r($dataObject); exit;
+//         for ($i = 0; $i < 250; $i++) {
+//             if (!empty($dataObject[$i])) {
+//                 return $dataObject[$i];
+//             }
+//         }
+        return static::query()->get(
+            is_array($columns) ? $columns : func_get_args()
+            )->where('menu_id', '=', $menu_id)->first();
     }
     
     /**
@@ -114,6 +120,35 @@ class Article extends Model
         $articles = static::query()->get(
             is_array($columns) ? $columns : func_get_args()
             );
+
+        for($i = 0; $i < count($articles); $i++) {
+            $articles[$i]->menu_name = $this->menuModel->getById($articles[$i]->menu_id)->name;
+            $articles[$i]->nick = $this->userModel->getById($articles[$i]->user_id)->nick;
+        }
+        return $articles;
+        
+//         $idx = 0;
+//         for($i = 0; $i < 65535; $i++) {
+//             if (!empty($articles[$i])) {
+//                 $articles[$i]->menu_name = $this->menuModel->getById($articles[$i]->menu_id)->name;
+//                 $articles[$i]->nick = $this->userModel->getById($articles[$i]->user_id)->nick;
+//                 $idx++;
+//             }
+//             if ($idx == count($articles)) {
+//                 return $articles;
+//             }
+//         }
+    }
+    
+        /**
+     * Return all articles records
+     *
+     * @return [object]
+     */
+    public function getPublished(int $menu_id, $columns = ['*']) {
+        $articles = static::query()->get(
+            is_array($columns) ? $columns : func_get_args()
+            )->where('published', 1)->where('menu_id', $menu_id);
         
         $idx = 0;
         for($i = 0; $i < 65535; $i++) {
@@ -126,29 +161,6 @@ class Article extends Model
                 return $articles;
             }
         }
-    }
-    
-        /**
-     * Return all articles records
-     *
-     * @return [object]
-     */
-    public function getPublished(int $menu_id, $columns = ['*']) {
-        $articles = static::query()->get(
-            is_array($columns) ? $columns : func_get_args()
-            )->where('published', 1)->where('menu_id', $menu_id);
-            
-            $idx = 0;
-            for($i = 0; $i < 65535; $i++) {
-                if (!empty($articles[$i])) {
-                    $articles[$i]->menu_name = $this->menuModel->getById($articles[$i]->menu_id)->name;
-                    $articles[$i]->nick = $this->userModel->getById($articles[$i]->user_id)->nick;
-                    $idx++;
-                }
-                if ($idx == count($articles)) {
-                    return $articles;
-                }
-            }
     }
     
 /**

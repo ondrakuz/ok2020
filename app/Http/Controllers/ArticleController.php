@@ -23,6 +23,9 @@ class ArticleController extends Controller
     public function __construct() {
         $this->menuModel = new Menu();
         $this->articleModel = new Article();
+        
+        $this->middleware('auth')->except('show');
+        $this->authorizeResource(Article::class, 'article');
     }
     
     /**
@@ -32,15 +35,18 @@ class ArticleController extends Controller
      */
     public function index()
     {
-        if (Auth::guard()->check() && Auth::user()->role_id < RoleHelper::MODERATOR) {
-            $this->user = Auth::user();
-            $this->user->role = $this->user->role();
-            $articles = $this->articleModel->getAll();
-            //print_r($articles); exit;
-            return view('article.index', ['articles' => $this->articleModel->getAll(), 'user' => $this->user]);
-        } else {
-            return redirect()->route('auth.login');
-        }
+//         if (Auth::guard()->check() && Auth::user()->role_id < RoleHelper::MODERATOR) {
+//             $this->user = Auth::user();
+//             $this->user->role = $this->user->role();
+//             $articles = $this->articleModel->getAll();
+//             //print_r($articles); exit;
+//             return view('article.index', ['articles' => $this->articleModel->getAll(), 'user' => $this->user]);
+//         } else {
+//             return redirect()->route('auth.login');
+//         }
+        $this->user = Auth::user();
+        $this->user->role = $this->user->role();
+        return view('article.index', ['articles' => $this->articleModel->getAll(), 'user' => $this->user]);
     }
     
     /**
@@ -60,16 +66,22 @@ class ArticleController extends Controller
      */
     public function create()
     {
-        if (Auth::guard()->check() && Auth::user()->role_id < RoleHelper::MODERATOR) {
-            $this->user = Auth::user();
-            $this->user->role = $this->user->role();
-            return view('article.create', [
-                'menus' => $this->menuModel->getAll(),
-                'user' => $this->user,
-            ]);
-        } else {
-            return redirect()->route('auth.login');
-        }
+//         if (Auth::guard()->check() && Auth::user()->role_id < RoleHelper::MODERATOR) {
+//             $this->user = Auth::user();
+//             $this->user->role = $this->user->role();
+//             return view('article.create', [
+//                 'menus' => $this->menuModel->getAll(),
+//                 'user' => $this->user,
+//             ]);
+//         } else {
+//             return redirect()->route('auth.login');
+//         }
+        $this->user = Auth::user();
+        $this->user->role = $this->user->role();
+        return view('article.create', [
+            'menus' => $this->menuModel->getAll(),
+            'user' => $this->user,
+        ]);
     }
 
     /**
@@ -122,17 +134,24 @@ class ArticleController extends Controller
      */
     public function edit(string $url)
     {
-        if (Auth::guard()->check() && Auth::user()->role_id < RoleHelper::MODERATOR) {
-            $this->user = Auth::user();
-            $this->user->role = $this->user->role();
-            return view('article.edit', [
-                'article' => $this->articleModel->getByUrl($url),
-                'menus' => $this->menuModel->getAll(),
-                'user' => $this->user,
-            ]);
-        } else {
-            return redirect()->route('auth.login');
-        }
+//         if (Auth::guard()->check() && Auth::user()->role_id < RoleHelper::MODERATOR) {
+//             $this->user = Auth::user();
+//             $this->user->role = $this->user->role();
+//             return view('article.edit', [
+//                 'article' => $this->articleModel->getByUrl($url),
+//                 'menus' => $this->menuModel->getAll(),
+//                 'user' => $this->user,
+//             ]);
+//         } else {
+//             return redirect()->route('auth.login');
+//         }
+        $this->user = Auth::user();
+        $this->user->role = $this->user->role();
+        return view('article.edit', [
+            'article' => $this->articleModel->getByUrl($url),
+            'menus' => $this->menuModel->getAll(),
+            'user' => $this->user,
+        ]);
     }
 
     /**
@@ -152,34 +171,48 @@ class ArticleController extends Controller
         if ($article->update($arr)) {
             return redirect()->route('article.index');
         } else {
-            return redirect()->back()->withErrors(['Article did not updated.']);
+            return redirect()->back()->withErrors(['Article has not been updated.']);
         }
     }
     
     /**
-     * Change published param of article
+     * Change published parameter of article
      *
      * @return \Illuminate\Http\Response
      */
     public function published($url)
     {
-        if (Auth::guard()->check() && Auth::user()->role_id < RoleHelper::MODERATOR) {
-            $article = $this->articleModel->getByUrl($url);
-            $data['published'] = $article->published;
-            if ($data['published']) {
-                $data['published'] = 0;
-            } else {
-                $data['published'] = 1;
-            }
-            $article->fill($data);
+//         if (Auth::guard()->check() && Auth::user()->role_id < RoleHelper::MODERATOR) {
+//             $article = $this->articleModel->getByUrl($url);
+//             $data['published'] = $article->published;
+//             if ($data['published']) {
+//                 $data['published'] = 0;
+//             } else {
+//                 $data['published'] = 1;
+//             }
+//             $article->fill($data);
             
-            if ($article->save()) {
-                return redirect()->route('article.index');
-            } else {
-                return redirect()->back()->withErrors(['Value did not changed.']);
-            }
+//             if ($article->save()) {
+//                 return redirect()->route('article.index');
+//             } else {
+//                 return redirect()->back()->withErrors(['Value did not changed.']);
+//             }
+//         } else {
+//             return redirect()->route('auth.login');
+//         }
+        $article = $this->articleModel->getByUrl($url);
+        $data['published'] = $article->published;
+        if ($data['published']) {
+            $data['published'] = 0;
         } else {
-            return redirect()->route('auth.login');
+            $data['published'] = 1;
+        }
+        $article->fill($data);
+        
+        if ($article->save()) {
+            return redirect()->route('article.index');
+        } else {
+            return redirect()->back()->withErrors(['Value did not changed.']);
         }
     }
     
